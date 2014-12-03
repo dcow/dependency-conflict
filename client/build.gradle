@@ -1,9 +1,3 @@
-buildscript {
-	dependencies {
-		classpath gradleApi()
-	}
-}
-
 apply plugin: 'groovy'
 apply plugin: 'application'
 
@@ -13,23 +7,33 @@ repositories {
     }
 }
 
-configurations.compile.resolutionStrategy.failOnVersionConflict()
-
 dependencies {
-	compile localGroovy()
-	compile 'com.example:foo:1'
-	compile 'org.example:foo:1'
+    compile localGroovy()
+
+    def foo = 'com.example:foo'
+    def boo = 'org.example:foo'
+
+    compile "$foo:1" 
+    compile "$boo:1"
+
+    modules {
+        module(foo) {
+            replacedBy(boo)
+        }
+    }
 }
+
+//configurations.compile.resolutionStrategy.failOnVersionConflict()
 
 mainClassName = 'bar.Main'
 
 task info << {
-	configurations.compile.dependencies.each {
-		println it
-	}
+    configurations.compile.dependencies.each {
+       println it
+    }
 }
 
 tasks.withType(GroovyCompile)*.configure {
-	options.verbose = true
-	groovyOptions.verbose = true
+    options.verbose = true
+    groovyOptions.verbose = true
 }

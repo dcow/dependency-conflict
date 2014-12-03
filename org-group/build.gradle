@@ -15,9 +15,9 @@ group = "org.example"
 version = '1'
 
 uploadArchives {
-	repositories {
-		mavenDeployer {
-			repository(url: project.repositories.maven.url)
-		}
-	}
+    repositories {
+        mavenDeployer {
+            repository(url: project.repositories.maven.url)
+        }
+    }
 }
