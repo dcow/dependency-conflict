@@ -1,0 +1,23 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    compile localGroovy()
+}
+
+repositories {
+    maven {
+        url "../repo"
+    }
+}
+
+group = "org.example"
+version = '1'
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			repository(url: project.repositories.maven.url)
+		}
+	}
+}

@@ -1,0 +1,35 @@
+buildscript {
+	dependencies {
+		classpath gradleApi()
+	}
+}
+
+apply plugin: 'groovy'
+apply plugin: 'application'
+
+repositories {
+    maven {
+        url "../repo"
+    }
+}
+
+configurations.compile.resolutionStrategy.failOnVersionConflict()
+
+dependencies {
+	compile localGroovy()
+	compile 'com.example:foo:1'
+	compile 'org.example:foo:1'
+}
+
+mainClassName = 'bar.Main'
+
+task info << {
+	configurations.compile.dependencies.each {
+		println it
+	}
+}
+
+tasks.withType(GroovyCompile)*.configure {
+	options.verbose = true
+	groovyOptions.verbose = true
+}
